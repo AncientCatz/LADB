@@ -86,7 +86,7 @@ jobs:
           tag_name: ${{ env.VERSION_TAG }}
           name: LADB ${{ env.VERSION_TAG }}
           body: |
-            MD5: ${{ env.APK_MD5 }}
+            > MD5: ${{ env.APK_MD5 }}
           files: |
             LADB_${{ env.VERSION_TAG }}.apk
           draft: ${{ github.event.inputs.dry-run != '' }}
