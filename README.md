@@ -3,6 +3,8 @@
 - So, credits goes to original repo holder, not to me.
 - So if you have any issue then check first that issue is in official repo or not, You are only allowed to report that issue in official repo.
 
+[![CI](https://github.com/AncientCatz/LADB/actions/workflows/build.yml/badge.svg?branch=main&event=push)](https://github.com/AncientCatz/LADB/actions/workflows/build.yml)
+
 # LADB
 A local ADB shell for Android!
 
