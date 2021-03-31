@@ -8,6 +8,8 @@
 # ![app icon](./.github/readme-images/app-icon.png) LADB
 A local ADB shell for Android!
 
+![screenshot of app](./.github/readme-images/preview.png)
+
 # How does it work?
 LADB bundles an ADB server within the app libraries. Normally, this server cannot connect to the local device because it requires an active USB connection. However, Android's Wireless ADB Debugging feature allows the server and the client to speak to each other locally.
 
