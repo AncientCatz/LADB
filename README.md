@@ -1,6 +1,6 @@
 # Important - Read these points first
 - Original repo is https://github.com/tytydraco/LADB
-- So, credits goes to original repo holder, not to me. I have just collected them.
+- So, credits goes to original repo holder, not to me.
 - So if you have any issue then check first that issue is in official repo or not, You are only allowed to report that issue in official repo.
 
 # LADB
