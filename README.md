@@ -5,6 +5,7 @@
 
 # ![app icon](./.github/readme-images/app-icon.png) LADB
 A local ADB shell for Android!
+
 [![CI](https://github.com/AncientCatz/LADB/actions/workflows/build.yml/badge.svg?branch=main&event=push)](https://github.com/AncientCatz/LADB/actions/workflows/build.yml) [![stable release](https://img.shields.io/github/v/release/AncientCatz/LADB.svg?maxAge=3600&label=Release)](https://github.com/AncientCatz/LADB/releases)
 ![screenshot of app](./.github/readme-images/preview.png)
 
