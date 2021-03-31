@@ -1,7 +1,7 @@
 # Important - Read these points first
 - Original repo is https://github.com/tytydraco/LADB
-- So, credits goes to original repo holder, not to me.
-- So if you have any issue then check first that issue is in official repo or not, You are only allowed to report that issue in official repo.
+- Credits goes to original repo holder, not to me.
+- So, if you have any issue then check first that issue is in official repo or not, You are only allowed to report that issue in official repo.
 
 # ![app icon](./.github/readme-images/app-icon.png) LADB
 [![CI](https://github.com/AncientCatz/LADB/actions/workflows/build.yml/badge.svg?branch=main&event=push)](https://github.com/AncientCatz/LADB/actions/workflows/build.yml) [![stable release](https://img.shields.io/github/v/release/AncientCatz/LADB.svg?maxAge=3600&label=Release)](https://github.com/AncientCatz/LADB/releases)
