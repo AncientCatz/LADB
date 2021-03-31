@@ -31,4 +31,4 @@ Still not working? Try this:
 8. Enable Airplane Mode
 9. Open LADB
 
-Still confused? Email me at tylernij@gmail.com.
+Still confused? Email to tylernij@gmail.com.
