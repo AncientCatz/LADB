@@ -5,7 +5,7 @@
 - Credits goes to original repo holder, not to me.
 - So, if you have any issue then check first that issue is in official repo or not, You are only allowed to report that issue in official repo.
 
-<a href="https://github.com/AncientCatz/LADB"><img src="./github/readme-images/LADB-icon.png" width="128px" align="right"/></a>
+<a href="https://github.com/AncientCatz/LADB"><img src="/.github/readme-images/LADB-icon.png" width="128px" align="right"/></a>
 
 # LADB
 A local ADB shell for Android!
