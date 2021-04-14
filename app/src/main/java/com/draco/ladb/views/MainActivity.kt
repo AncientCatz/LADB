@@ -58,46 +58,46 @@ class MainActivity : AppCompatActivity() {
             .setCancelable(false)
             .setView(R.layout.dialog_pair)
 
+        /* Send commands to the ADB instance */
         command.setOnKeyListener { _, keyCode, event ->
             if (keyCode == KeyEvent.KEYCODE_ENTER) {
                 if (event.action == KeyEvent.ACTION_DOWN) {
                     val text = command.text.toString()
                     command.text = null
-
                     lifecycleScope.launch(Dispatchers.IO) {
-                        viewModel.getAdb().sendToShellProcess(text)
+                        viewModel.adb.sendToShellProcess(text)
                     }
                 }
-
                 return@setOnKeyListener true
             }
-
             return@setOnKeyListener false
         }
 
-        viewModel.getOutputText().observe(this, Observer {
+        /* Update the output text */
+        viewModel.outputText.observe(this, Observer {
             output.text = it
             outputScrollView.post {
                 outputScrollView.fullScroll(ScrollView.FOCUS_DOWN)
                 command.requestFocus()
-
                 val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.showSoftInput(command, InputMethod.SHOW_FORCED)
             }
         })
 
-        viewModel.getAdb().getClosed().observe(this, Observer {
+        /* Restart the activity on reset */
+        viewModel.adb.closed.observe(this, Observer {
             if (it == true) {
                 val intent = packageManager.getLaunchIntentForPackage(BuildConfig.APPLICATION_ID)!!
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 finishAffinity()
                 startActivity(intent)
                 exitProcess(0)
             }
         })
 
-        viewModel.getAdb().getReady().observe(this, Observer {
-            if (it == false) {
+        /* Prepare progress bar, pairing latch, and script executing */
+        viewModel.adb.ready.observe(this, Observer {
+            if (it != true) {
                 runOnUiThread {
                     command.isEnabled = false
                     progress.visibility = View.VISIBLE
@@ -118,16 +118,14 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        progress.visibility = View.VISIBLE
-        command.isEnabled = false
-
+        /* Check if we need to pair with the device on Android 11 */
         with(getPreferences(Context.MODE_PRIVATE)) {
             if (viewModel.shouldWePair(this)) {
                 pairingLatch = CountDownLatch(1)
-                viewModel.getAdb().debug("Requesting pairing information")
+                viewModel.adb.debug("Requesting pairing information")
                 askToPair {
                     with(edit()) {
-                        putBoolean("paired", true)
+                        putBoolean(getString(R.string.paired_key), true)
                         apply()
                     }
                     pairingLatch.countDown()
@@ -136,6 +134,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Execute a script from the main intent
+     */
     private fun executeFromScript() {
         val code = viewModel.getScriptFromIntent(intent) ?: return
 
@@ -146,9 +147,12 @@ class MainActivity : AppCompatActivity() {
             .setAction(getString(R.string.dismiss)) {}
             .show()
 
-        viewModel.getAdb().sendScript(code)
+        viewModel.adb.sendScript(code)
     }
 
+    /**
+     * Ask the user to pair
+     */
     private fun askToPair(callback: Runnable? = null) {
         pairDialog
             .create()
@@ -158,8 +162,8 @@ class MainActivity : AppCompatActivity() {
                     val code = findViewById<TextInputEditText>(R.id.code)!!.text.toString()
 
                     lifecycleScope.launch(Dispatchers.IO) {
-                        viewModel.getAdb().debug("Requesting additional pairing information")
-                        viewModel.getAdb().pair(port, code)
+                        viewModel.adb.debug("Requesting additional pairing information")
+                        viewModel.adb.pair(port, code)
 
                         callback?.run()
                     }
@@ -180,7 +184,7 @@ class MainActivity : AppCompatActivity() {
                     val uri = FileProvider.getUriForFile(
                             this,
                             BuildConfig.APPLICATION_ID + ".provider",
-                            viewModel.getAdb().outputBufferFile
+                            viewModel.adb.outputBufferFile
                     )
                     val intent = Intent(Intent.ACTION_SEND)
                     with(intent) {
@@ -196,6 +200,10 @@ class MainActivity : AppCompatActivity() {
                             .setAction(getString(R.string.dismiss)) {}
                             .show()
                 }
+                true
+            }
+            R.id.clear -> {
+                viewModel.clearOutputText()
                 true
             }
             else -> super.onOptionsItemSelected(item)
